@@ -1,6 +1,11 @@
 <?php
 
 while (true) {
-    $line = readline("Enter command :");
-    echo "Vous avez saisi : $line\n";
+    $line = trim(readline("Enter command :"));
+
+    if ($line === "list") {
+        echo "show list\n";
+    } else {
+        echo "Unknown command\n";
+    }
 }
