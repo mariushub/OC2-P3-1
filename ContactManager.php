@@ -22,6 +22,35 @@ class ContactManager
         return $contacts;
     }
 
+    public function findById(int $id): ?Contact
+    {
+        $request = $this->pdo->prepare('SELECT * FROM contact WHERE id = :id');
+        $request->execute(['id' => $id]);
+        $row = $request->fetch(PDO::FETCH_ASSOC);
+
+        if ($row === false) {
+            return null;
+        }
+
+        return $this->createContactFromRow($row);
+    }
+
+    public function create(Contact $contact): Contact
+    {
+        $request = $this->pdo->prepare(
+            'INSERT INTO contact (name, email, phone) VALUES (:name, :email, :phone)'
+        );
+        $request->execute([
+            'name' => $contact->getName(),
+            'email' => $contact->getEmail(),
+            'phone' => $contact->getPhone(),
+        ]);
+
+        $contact->setId((int) $this->pdo->lastInsertId());
+
+        return $contact;
+    }
+
     private function createContactFromRow(array $row): Contact
     {
         $contact = new Contact();
@@ -31,5 +60,13 @@ class ContactManager
         $contact->setPhone($row['phone']);
 
         return $contact;
+    }
+
+    public function delete(int $id): bool
+    {
+        $request = $this->pdo->prepare('DELETE FROM contact WHERE id = :id');
+        $request->execute(['id' => $id]);
+
+        return $request->rowCount() > 0;
     }
 }
