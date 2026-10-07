@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Runs each command and prints the result in the terminal.
+ */
 class Command
 {
     private ContactManager $manager;

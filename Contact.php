@@ -1,7 +1,11 @@
 <?php
 
+/**
+ * A contact kept in memory. This class never talks to the database.
+ */
 class Contact
 {
+    // Stays null until the contact is saved in the database
     private ?int $id = null;
     private ?string $name = null;
     private ?string $email = null;
@@ -47,6 +51,7 @@ class Contact
         $this->phone = $phone;
     }
 
+    // Format used by the list and detail commands
     public function toString(): string
     {
         return "$this->id, $this->name, $this->email, $this->phone";
