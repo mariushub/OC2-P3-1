@@ -52,7 +52,7 @@ class Contact
     }
 
     // Format used by the list and detail commands
-    public function toString(): string
+    public function __toString(): string
     {
         return "$this->id, $this->name, $this->email, $this->phone";
     }

@@ -20,7 +20,7 @@ class Command
         echo "id, name, email, phone number\n";
 
         foreach ($contacts as $contact) {
-            echo $contact->toString() . "\n";
+            echo $contact . "\n";
         }
     }
 
@@ -52,8 +52,9 @@ class Command
     {
         if ($this->manager->delete($id)) {
             echo "Contact $id supprimé\n";
-        } else {
-            echo "Aucun contact avec l'id $id\n";
+            return;
         }
+        
+        echo "Aucun contact avec l'id $id\n";
     }
 }
